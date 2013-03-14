@@ -18,10 +18,12 @@
 
 void connectControllerToModel( OgreWindow* controller, DemoModel* model )
 {
-	controller->mBtnPlayRotateCube->signal_clicked().connect( sigc::mem_fun( *model, &DemoModel::playRotation ) );
-	controller->mBtnPauseRotateCube->signal_clicked().connect( sigc::mem_fun( *model, &DemoModel::pauseRotation ) );
+	controller->mPlayButton->signal_clicked().connect( sigc::mem_fun( *model, &DemoModel::playRotation ) );
+	controller->mPauseButton->signal_clicked().connect( sigc::mem_fun( *model, &DemoModel::pauseRotation ) );
 	controller->mFrameSlider->signal_change_value().connect( sigc::mem_fun( *model, &DemoModel::FrameSliderChanged ) );
 
+	model->mSig_SetPlayButtonEnabled.connect( sigc::mem_fun( *controller, &OgreWindow::setPlayButtonEnabled ) );
+	model->mSig_SetPauseButtonEnabled.connect( sigc::mem_fun( *controller, &OgreWindow::setPauseButtonEnabled ) );
 	model->mSig_SetFrameSlider.connect( sigc::mem_fun( *controller, &OgreWindow::setFrameSliderPosition ) );
 }
 

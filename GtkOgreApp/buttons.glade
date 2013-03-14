@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="2.24"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkButton" id="playButton">
+    <property name="visible">True</property>
+    <property name="can_focus">True</property>
+    <property name="receives_default">True</property>
+    <property name="use_action_appearance">False</property>
+    <property name="image">playImage</property>
+    <property name="image_position">right</property>
+  </object>
+  <object class="GtkImage" id="playImage">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">gtk_media_play_ltr.png</property>
+  </object>
+  <object class="GtkButton" id="pauseButton">
+    <property name="visible">True</property>
+    <property name="can_focus">True</property>
+    <property name="receives_default">True</property>
+    <property name="use_action_appearance">False</property>
+    <property name="image">pauseImage</property>
+    <property name="image_position">right</property>
+  </object>
+  <object class="GtkImage" id="pauseImage">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">gtk_media_pause.png</property>
+  </object>
+</interface>

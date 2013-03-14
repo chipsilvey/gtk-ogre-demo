@@ -11,6 +11,7 @@
 #include <gtkmm.h>
 #include <gtkmm/button.h>
 #include <gtkmm/window.h>
+#include <gtkmm/builder.h>
 
 #include "OgreWidget.h"
 
@@ -24,14 +25,16 @@ public:
 
 	bool hasExited() { return mExited; }
 
+	virtual void setPlayButtonEnabled( bool value );
+	virtual void setPauseButtonEnabled( bool value );
 	virtual void setFrameSliderPosition( double value );
 
 	virtual bool on_delete_event( GdkEventAny* event );
 	virtual bool on_key_press_event( GdkEventKey *event );
 	virtual bool on_key_release_event( GdkEventKey *event );
 
-	Gtk::Button* mBtnPauseRotateCube;
-	Gtk::Button* mBtnPlayRotateCube;
+	Gtk::Button* mPauseButton;
+	Gtk::Button* mPlayButton;
 	Gtk::HScale* mFrameSlider;
 
 protected:

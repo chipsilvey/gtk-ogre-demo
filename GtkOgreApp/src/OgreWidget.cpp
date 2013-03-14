@@ -161,9 +161,6 @@ void OgreWidget::initCamera(void)
 
 void OgreWidget::initViewport(void)
 {
-	//DEBUG
-	std::cout << "hit initViewport\n";
-
 	// Create one viewport, entire window
 	mViewport = mRenderWindow->addViewport( mCamera );
 

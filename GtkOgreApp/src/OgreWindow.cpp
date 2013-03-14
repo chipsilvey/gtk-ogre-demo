@@ -14,21 +14,30 @@ OgreWindow::OgreWindow( OgreWidget* ogreWidget ) :
 {
 	set_border_width( 10 );
 
+	Glib::RefPtr<Gtk::Builder> gtkBuilder = Gtk::Builder::create_from_file( "buttons.glade" );
+
+	gtkBuilder->get_widget( "playButton", mPlayButton );
+	gtkBuilder->get_widget( "pauseButton", mPauseButton );
+
+	//disables the pause button initially.
+	mPauseButton->set_sensitive( false );
+
+	//this is needed to make images show up on buttons for some reason.
+	GtkSettings *default_settings = gtk_settings_get_default();
+	g_object_set( default_settings, "gtk-button-images", TRUE, NULL );
+
 	//TODO: don't these need to be deleted in deconstructor? or does gtk take care of that?
 
 	Gtk::VBox *vertBox = new Gtk::VBox( false, 10 );
 	Gtk::HBox *horzBox = new Gtk::HBox( false, 10 );
 
-	mBtnPlayRotateCube = new Gtk::Button( "Play Cube Rotation" );
-	mBtnPauseRotateCube = new Gtk::Button( "Pause Cube Rotation" );
-
 	double hScalemin = 0;
 	double hScalemax = 101;
 	double hScalestep = 1;
-	mFrameSlider = new Gtk::HScale( hScalemin, hScalemax, hScalestep ); //value_changed or changed function/signal
+	mFrameSlider = new Gtk::HScale( hScalemin, hScalemax, hScalestep );
 
-	horzBox->pack_start( *mBtnPlayRotateCube, true, true, 10 );
-	horzBox->pack_start( *mBtnPauseRotateCube, true, true, 10 );
+	horzBox->pack_start( *mPauseButton, true, true, 10 );
+	horzBox->pack_start( *mPlayButton, true, true, 10 );
 
 	vertBox->pack_start( *ogreWidget, true, true, 10 );
 	vertBox->pack_start( *horzBox, true, true, 10 );
@@ -39,6 +48,16 @@ OgreWindow::OgreWindow( OgreWidget* ogreWidget ) :
 
 OgreWindow::~OgreWindow()
 {
+}
+
+void OgreWindow::setPlayButtonEnabled( bool value )
+{
+	mPlayButton->set_sensitive( !value );
+}
+
+void OgreWindow::setPauseButtonEnabled( bool value )
+{
+	mPauseButton->set_sensitive( !value );
 }
 
 void OgreWindow::setFrameSliderPosition( double value )

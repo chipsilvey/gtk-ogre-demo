@@ -25,13 +25,20 @@ public:
 	sigc::signal< void, int > mSig_RotateCube;
 	Glib::Dispatcher mSig_RenderFrame;
 
+	sigc::signal< void, bool > mSig_SetPlayButtonEnabled;
+	sigc::signal< void, bool > mSig_SetPauseButtonEnabled;
 	sigc::signal< void, double > mSig_SetFrameSlider;
 
 protected:
 
 	virtual void updateView(void);
+
+	virtual void setPlaying( bool value );
+
 	virtual void rotateCube(void);
-	virtual void updateFrameSlider(void);
+	virtual void setPlayButtonEnabled( bool value );
+	virtual void setPauseButtonEnabled( bool value );
+	virtual void setFrameSlider(void);
 
 	// mFrameSliderMax is set on initialization.
 	//	it would be better to pass or retrieve the value.

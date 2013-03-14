@@ -34,12 +34,12 @@ void DemoModel::playRotation()
 		mCurrentFrameNumber = 0;
 	}
 
-	mPlaying = true;
+	this->setPlaying( true );
 }
 
 void DemoModel::pauseRotation()
 {
-	mPlaying = false;
+	this->setPlaying( false );
 }
 
 bool DemoModel::FrameSliderChanged( Gtk::ScrollType scrollType, double value )
@@ -51,7 +51,7 @@ bool DemoModel::FrameSliderChanged( Gtk::ScrollType scrollType, double value )
 
 	if ( mPlaying )
 	{
-		mPlaying = false;
+		setPlaying( false );
 	}
 
 	mNewFrameNumber = value * ( mEndFrameNumber / mFrameSliderMax );
@@ -95,7 +95,7 @@ void DemoModel::updateView()
 			mCurrentFrameNumber++;
 			mNewFrameNumber = mCurrentFrameNumber;
 
-			updateFrameSlider();
+			setFrameSlider();
 
 			rotateCube();
 
@@ -103,7 +103,7 @@ void DemoModel::updateView()
 		}
 		else
 		{
-			mPlaying = false;
+			setPlaying( false );
 		}
 	}
 	else
@@ -119,12 +119,30 @@ void DemoModel::updateView()
 	}
 }
 
+void DemoModel::setPlaying( bool value )
+{
+	setPlayButtonEnabled( value );
+	setPauseButtonEnabled( !value );
+
+	this->mPlaying = value;
+}
+
 void DemoModel::rotateCube()
 {
 	this->mSig_RotateCube( mCurrentFrameNumber * ( mMaxCubeRotation / mEndFrameNumber ) );
 }
 
-void DemoModel::updateFrameSlider()
+void DemoModel::setPlayButtonEnabled( bool value )
+{
+	this->mSig_SetPlayButtonEnabled( value );
+}
+
+void DemoModel::setPauseButtonEnabled( bool value )
+{
+	this->mSig_SetPauseButtonEnabled( value );
+}
+
+void DemoModel::setFrameSlider()
 {
 	this->mSig_SetFrameSlider( mCurrentFrameNumber * ( 100 / mEndFrameNumber ) );
 }
