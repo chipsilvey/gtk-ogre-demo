@@ -70,8 +70,6 @@ void DemoModel::Update( double deltaTime )
 			mFirstRun = false;
 		}
 
-		//TODO: would this be better or worse than setting to 0?
-		//mTimeSinceLastFrame = mTimeSinceLastFrame - mTimeBetweenFrames;
 		mTimeSinceLastFrame = 0;
 
 		updateView();

@@ -30,12 +30,13 @@ public:
 	virtual void setFrameSliderPosition( double value );
 
 	virtual bool on_delete_event( GdkEventAny* event );
-	virtual bool on_key_press_event( GdkEventKey *event );
-	virtual bool on_key_release_event( GdkEventKey *event );
 
 	Gtk::Button* mPauseButton;
 	Gtk::Button* mPlayButton;
 	Gtk::HScale* mFrameSlider;
+
+	Gtk::HBox* mHorzBox;
+	Gtk::VBox* mVertBox;
 
 protected:
 

@@ -107,7 +107,7 @@ void OgreWidget::createScene()
 
 	Ogre::Entity* cube = mSceneMgr->createEntity( "cube", Ogre::SceneManager::PT_CUBE );
 	Ogre::SceneNode* cubeNode = mSceneMgr->getRootSceneNode()->createChildSceneNode( "cubeNode" );
-	cubeNode->setScale( 0.1, 0.1, 0.1 );
+	cubeNode->setScale( 0.3, 0.3, 0.3 );
 	cube->setMaterialName( "checker.png" ); //not working
 	cubeNode->attachObject( cube );
 
@@ -151,11 +151,10 @@ void OgreWidget::initCamera(void)
 	// Create the camera
 	mCamera = mSceneMgr->createCamera( "Camera" );
 
-	// Position it at 500 in Z direction
-	mCamera->setPosition( Ogre::Vector3( 0, 0, 80 ) );
+	mCamera->setPosition( Ogre::Vector3( 0, 30, 120 ) );
 
-	// Look back along -Z
-	mCamera->lookAt( Ogre::Vector3( 0, 0, -300 ) );
+	// Look back along -Z and slightly down (-Y)
+	mCamera->lookAt( Ogre::Vector3( 0, -60, -300 ) );
 	mCamera->setNearClipDistance( 5 );
 }
 
@@ -192,7 +191,7 @@ void OgreWidget::on_size_allocate( Gtk::Allocation& allocation )
 		);
 	}
 
-	//this is only hit on resize events and fails to resize the ogre window.
+	//this is only hit on resize events
 	if ( mRenderWindow )
 	{
 		mRenderWindow->windowMovedOrResized();
@@ -271,16 +270,11 @@ void OgreWidget::on_realize()
 
 	   	mRenderWindow->setAutoUpdated( false );
 
-	   	//TODO what does set_flags(Gtk::NO_WINDOW) do?
 	   	unset_flags( Gtk::NO_WINDOW );
 
 	   	set_window( mRefGdkWindow );
 
 	   	set_double_buffered( true );
-
-	   	//make the widget receive expose events
-//	   	mRefGdkWindow->set_user_data( gobj() );
-//	   	mRefGdkWindow->set_back_pixmap( Glib::RefPtr<Gdk::Pixmap>(), false );
 
 	   	createScene();
    }

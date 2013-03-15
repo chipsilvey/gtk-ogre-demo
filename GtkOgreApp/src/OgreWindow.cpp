@@ -26,28 +26,31 @@ OgreWindow::OgreWindow( OgreWidget* ogreWidget ) :
 	GtkSettings *default_settings = gtk_settings_get_default();
 	g_object_set( default_settings, "gtk-button-images", TRUE, NULL );
 
-	//TODO: don't these need to be deleted in deconstructor? or does gtk take care of that?
-
-	Gtk::VBox *vertBox = new Gtk::VBox( false, 10 );
-	Gtk::HBox *horzBox = new Gtk::HBox( false, 10 );
+	mVertBox = new Gtk::VBox( false, 10 );
+	mHorzBox = new Gtk::HBox( false, 10 );
 
 	double hScalemin = 0;
 	double hScalemax = 101;
 	double hScalestep = 1;
 	mFrameSlider = new Gtk::HScale( hScalemin, hScalemax, hScalestep );
 
-	horzBox->pack_start( *mPauseButton, true, true, 10 );
-	horzBox->pack_start( *mPlayButton, true, true, 10 );
+	mHorzBox->pack_start( *mPauseButton, true, true, 10 );
+	mHorzBox->pack_start( *mPlayButton, true, true, 10 );
 
-	vertBox->pack_start( *ogreWidget, true, true, 10 );
-	vertBox->pack_start( *horzBox, true, true, 10 );
-	vertBox->pack_start( *mFrameSlider, true, true, 10 );
+	mVertBox->pack_start( *ogreWidget, true, true, 10 );
+	mVertBox->pack_start( *mHorzBox, true, true, 10 );
+	mVertBox->pack_start( *mFrameSlider, true, true, 10 );
 
-	add(*vertBox);
+	add(*mVertBox);
 }
 
 OgreWindow::~OgreWindow()
 {
+	delete mPlayButton;
+	delete mPauseButton;
+	delete mVertBox;
+	delete mHorzBox;
+	delete mFrameSlider;
 }
 
 void OgreWindow::setPlayButtonEnabled( bool value )
@@ -69,16 +72,4 @@ bool OgreWindow::on_delete_event( GdkEventAny* event )
 {
 	mExited = true;
 	return false;
-}
-
-bool OgreWindow::on_key_press_event( GdkEventKey *event )
-{
-	std::cout << "keydown\n";
-	return true;
-}
-
-bool OgreWindow::on_key_release_event( GdkEventKey *event )
-{
-	std::cout << "keyup\n";
-	return true;
 }

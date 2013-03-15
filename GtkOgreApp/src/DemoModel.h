@@ -22,8 +22,8 @@ public:
 	virtual void playRotation(void);
 	virtual void pauseRotation(void);
 
-	sigc::signal< void, int > mSig_RotateCube;
 	Glib::Dispatcher mSig_RenderFrame;
+	sigc::signal< void, int > mSig_RotateCube;
 
 	sigc::signal< void, bool > mSig_SetPlayButtonEnabled;
 	sigc::signal< void, bool > mSig_SetPauseButtonEnabled;

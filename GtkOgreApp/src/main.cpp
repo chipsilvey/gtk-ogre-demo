@@ -14,8 +14,6 @@
 
 #include <time.h>
 
-//#define SIGNAL_CONNECT(_s,_i,_c,_f) (_s.connect(sigc::mem_fun(*_i,&_c::_f)))
-
 void connectControllerToModel( OgreWindow* controller, DemoModel* model )
 {
 	controller->mPlayButton->signal_clicked().connect( sigc::mem_fun( *model, &DemoModel::playRotation ) );
@@ -35,17 +33,16 @@ void connectModelToView( DemoModel* model, OgreWidget* view )
 
 int main ( int argc, char *argv[] )
 {
-	//TODO: should root be initialized else where?
-	Ogre::Root* root = new Ogre::Root();
+	Ogre::Root* ogreRoot = new Ogre::Root();
 
-	if ( !root->showConfigDialog() )
+	if ( !ogreRoot->showConfigDialog() )
 	{
 		return -1;
 	}
 
-	root->initialise( false );
+	ogreRoot->initialise( false );
 
-	Gtk::Main kit( argc, argv );
+	Gtk::Main gtkKit( argc, argv );
 
 	// instances
 	OgreWidget ogreWidget; // view
@@ -71,13 +68,13 @@ int main ( int argc, char *argv[] )
 		demoModel.Update( deltaTime );
 
 		// blocks only when events are pending
-		if ( kit.events_pending() )
+		if ( gtkKit.events_pending() )
 		{
-			kit.iteration();
+			gtkKit.iteration();
 		}
 		else
 		{
-			kit.iteration( false );
+			gtkKit.iteration( false );
 		}
 
 		deltaTime = pTime->getMillisecondsCPU() - startTime;
@@ -85,10 +82,9 @@ int main ( int argc, char *argv[] )
 
 	std::cout << "ogreWindow has Exited\n";
 
-	//TODO: is this necessary?
 	delete pTime;
-
-	delete root;
+	delete ogreRoot;
+	
 	return 0;
 }
 
